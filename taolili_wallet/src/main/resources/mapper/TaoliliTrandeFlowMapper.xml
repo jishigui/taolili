@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.taolili.mapper.TaoliliTrandeFlowMapper">
+
+    <resultMap id="BaseResultMap" type="com.taolili.domain.TaoliliTrandeFlow">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="userId" column="user_id" jdbcType="BIGINT"/>
+            <result property="walletId" column="wallet_id" jdbcType="BIGINT"/>
+            <result property="trandeCode" column="trande_code" jdbcType="CHAR"/>
+            <result property="tradeAmount" column="trade_amount" jdbcType="DECIMAL"/>
+            <result property="walletBalance" column="wallet_balance" jdbcType="DECIMAL"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,user_id,wallet_id,
+        trande_code,trade_amount,wallet_balance,
+        create_time,update_time
+    </sql>
+</mapper>
