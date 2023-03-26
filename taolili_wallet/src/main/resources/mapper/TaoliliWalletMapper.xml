@@ -10,10 +10,11 @@
             <result property="walletBalance" column="wallet_balance" jdbcType="DECIMAL"/>
             <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
             <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="version" column="version" jdbcType="BIGINT"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,user_id,create_time,
-        wallet_balance,update_time
+        id,user_id,wallet_balance,
+        create_time,update_time,version
     </sql>
 </mapper>

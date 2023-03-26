@@ -1,9 +1,7 @@
 package com.taolili.domain;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -48,6 +46,12 @@ public class TaoliliWallet implements Serializable {
      * 余额
      */
     private BigDecimal walletBalance;
+
+    /**
+     * 版本号
+     */
+    @Version
+    private Long version;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

@@ -68,8 +68,8 @@
             <option name="tableUIInfoList">
               <list>
                 <TableUIInfo>
-                  <option name="className" value="TaoliliTrandeFlow" />
-                  <option name="tableName" value="taolili_trande_flow" />
+                  <option name="className" value="TaoliliUser" />
+                  <option name="tableName" value="taolili_user" />
                 </TableUIInfo>
               </list>
             </option>

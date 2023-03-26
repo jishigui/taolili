@@ -36,28 +36,28 @@ public class TaoliliWalletServiceImpl extends ServiceImpl<TaoliliWalletMapper, T
 
     @Override
     public TaoliliWallet queryTaoliliWallet(String userId) {
-        LambdaQueryWrapper<TaoliliWallet> wrapper = Wrappers.lambdaQuery();
-        wrapper.eq(TaoliliWallet::getUserId,userId);
-        // TODO 不确定用户与钱包是不是一对一的关系
-        return taoliliWalletMapper.selectList(wrapper).get(0);
+        return taoliliWalletMapper.queryTaoliliWallet(userId);
     }
 
     @Override
-    public synchronized void updateTaoliliWallet(String userId, String trandeCode, BigDecimal tradeAmount) {
+    public void updateTaoliliWallet(String userId, String trandeCode, BigDecimal tradeAmount) {
         if (tradeAmount.compareTo(BigDecimal.ZERO) < 0) {
             throw new RuntimeException("交易金额不能为复数");
         }
-        // 先进行查询 查出钱包余额
+        // 先进行查询 查出钱包余额1 并同时使用mysql的行锁进行锁处理
         TaoliliWallet taoliliWallet = queryTaoliliWallet(userId);
         LambdaUpdateWrapper<TaoliliWallet> wrapper = Wrappers.lambdaUpdate();
-        wrapper.eq(TaoliliWallet::getUserId,userId);
+        wrapper.eq(TaoliliWallet::getUserId,userId)
+                .eq(TaoliliWallet::getVersion,taoliliWallet.getVersion())
+                .eq(TaoliliWallet::getVersion,taoliliWallet.getVersion())
+                .set(TaoliliWallet::getVersion,taoliliWallet.getVersion()+1L);
         BigDecimal walletBalance = taoliliWallet.getWalletBalance();
         // 判断是否大于0 是否为空
         if (walletBalance != null && walletBalance.compareTo(BigDecimal.ZERO) >= 0) {
             // 将交易记录插入交易流水表
             TaoliliTrandeFlow taoliliTrandeFlow = new TaoliliTrandeFlow();
-            taoliliTrandeFlow.setWalletId(taoliliWallet.getId());
-            taoliliTrandeFlow.setUserId(Long.valueOf(userId))
+            taoliliTrandeFlow.setWalletId(taoliliWallet.getId())
+                    .setUserId(Long.valueOf(userId))
                     .setWalletId(taoliliWallet.getId())
                     .setTrandeCode(trandeCode)
                     .setTradeAmount(tradeAmount);

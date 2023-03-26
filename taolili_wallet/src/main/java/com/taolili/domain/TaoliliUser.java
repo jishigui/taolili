@@ -1,9 +1,7 @@
 package com.taolili.domain;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -57,6 +55,12 @@ public class TaoliliUser implements Serializable {
      * 修改时间
      */
     private Date updateTime;
+
+    /**
+     * 版本号
+     */
+    @Version
+    private Long version;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
