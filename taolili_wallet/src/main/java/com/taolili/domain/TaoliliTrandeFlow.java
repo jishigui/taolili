@@ -22,7 +22,6 @@ import org.springframework.stereotype.Component;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Component
 @Accessors(chain = true)
 public class TaoliliTrandeFlow implements Serializable {
     /**

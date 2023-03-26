@@ -20,10 +20,7 @@ import java.util.List;
 public class TaoliliTrandeFlowServiceImpl extends ServiceImpl<TaoliliTrandeFlowMapper, TaoliliTrandeFlow>
     implements TaoliliTrandeFlowService {
 
-    TaoliliTrandeFlow taoliliTrandeFlow;
-
-    public TaoliliTrandeFlowServiceImpl(TaoliliTrandeFlow taoliliTrandeFlow, TaoliliTrandeFlowMapper taoliliTrandeFlowMapper) {
-        this.taoliliTrandeFlow = taoliliTrandeFlow;
+    public TaoliliTrandeFlowServiceImpl(TaoliliTrandeFlowMapper taoliliTrandeFlowMapper) {
         this.taoliliTrandeFlowMapper = taoliliTrandeFlowMapper;
     }
 
