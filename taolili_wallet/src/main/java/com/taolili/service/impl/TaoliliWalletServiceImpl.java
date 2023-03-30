@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
 * @author Administrator
@@ -46,11 +47,12 @@ public class TaoliliWalletServiceImpl extends ServiceImpl<TaoliliWalletMapper, T
         }
         // 先进行查询 查出钱包余额1 并同时使用mysql的行锁进行锁处理
         TaoliliWallet taoliliWallet = queryTaoliliWallet(userId);
+        AtomicLong version = new AtomicLong(taoliliWallet.getVersion());
         LambdaUpdateWrapper<TaoliliWallet> wrapper = Wrappers.lambdaUpdate();
         wrapper.eq(TaoliliWallet::getUserId,userId)
                 .eq(TaoliliWallet::getVersion,taoliliWallet.getVersion())
                 .eq(TaoliliWallet::getVersion,taoliliWallet.getVersion())
-                .set(TaoliliWallet::getVersion,taoliliWallet.getVersion()+1L);
+                .set(TaoliliWallet::getVersion,version.addAndGet(1L));
         BigDecimal walletBalance = taoliliWallet.getWalletBalance();
         // 判断是否大于0 是否为空
         if (walletBalance != null && walletBalance.compareTo(BigDecimal.ZERO) >= 0) {
@@ -82,6 +84,16 @@ public class TaoliliWalletServiceImpl extends ServiceImpl<TaoliliWalletMapper, T
         }else {
             throw new RuntimeException("余额不足");
         }
+    }
+
+    public static void main(String[] args) {
+        Long num = 1L;
+        AtomicLong atomicLong = new AtomicLong(num);
+        for (int i = 0;i < 9 ; i++ ) {
+            num = atomicLong.addAndGet(1L);
+            System.out.println(num);
+        }
+
     }
 
 }
